@@ -1,0 +1,42 @@
+1)ipconfig/if config
+
+2)ping 192.168.40.12
+     vi /etc/hosts
+     enter the ip address with name:
+     192.168.40.12  db01 
+
+3)ip addr show
+
+4)tracert www.google.in( in window , i have tried)
+        it will do 8 hops to reach the google server
+
+5)netstat -antp
+        it shows all the tcp point   
+        ps -ef | grep apache2
+        ps-ef | grep 3336
+
+6) ss -tunlp
+        for utp point
+
+7)nmap 
+    be carefully while using this command
+
+8) dig www.google.in
+
+9) nslookup www.google.in
+
+10) route -n
+    route
+          getways
+
+11) arp 
+      this command is to view or add the content to the kernels ARP table
+
+12) mtr www.google.in
+        it simillar to the tracert but in the dynamically . so if you're getting a slow internet or in b/w two system is aslow connectivity. you can find 
+
+13 telnet 192.168.40.12 33306
+   
+
+
+
