@@ -1,0 +1,98 @@
+whoami
+pwd
+clear
+mkdir
+touch
+cat
+mv
+rm
+cp
+# command --help
+ls
+sudo -i
+cat /etc/os-release
+cd /
+cd ..
+cd `
+
+----------linuix stucture--------
+home directroy ---> /home /root /user
+user executable ----> /bin
+system executable---> /sbin
+configuration ------> /etc
+mountpoint ---------> /media , /mnt
+kernal and bootloader--> /boot
+server data ------> /var /srv
+system information /proc /sys
+shared lib ---> /lib
+temporoy file --> /tmp
+
+cat /etc/hostname
+cat /proc/uptime
+free -m
+mkdir devopsdir{1..10}
+touch test{1..5}.txt
+***|rm -rf * |*** most dengousis command
+file yum (in /bin)
+file /bin/pwd
+vim
+ln -s /opt/dev/ops/devops/tests/command.txt cmds
+unlink cmds
+-----------------
+grep
+   grep -i firewall anaconda-ks.cfg
+   grep -i firewall < anaconda-ks.cfg
+less
+more
+head
+tail
+cut
+awk
+sed
+----------------
+ uptime
+free -m
+df -h
+/dev/null
+wc -l
+find
+locate
+updatedb
+locate host
+---------------------
+useradd
+groupadd
+id
+usermod -aG
+su -
+passwd
+lsof
+lsof -u vagrant
+---------------------
+ls -ld
+chown -R 
+chmod
+---------------------
+visudo
+ls -l /etc/sudoers
+cd /etc/sudoers.d/
+-----------------------
+tree /var/log
+curl https://....................rmp -o tree.........rmp
+rmp -ivh tree...64.rmp
+---------------------------
+systemctl
+----------------
+top
+ps aux
+ps -ef
+kill
+----------------
+tar --help
+tar -czvf jenkins.tar.gz jenkins
+zip
+unzip
+-----------------
+
+
+ 
