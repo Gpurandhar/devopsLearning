@@ -78,8 +78,8 @@ ls -l /etc/sudoers
 cd /etc/sudoers.d/
 -----------------------
 tree /var/log
-curl https://....................rmp -o tree.........rmp
-rmp -ivh tree...64.rmp
+curl https://....................rpm -o tree.........rpm
+rpm -ivh tree...64.rpm
 ---------------------------
 systemctl
 ----------------
