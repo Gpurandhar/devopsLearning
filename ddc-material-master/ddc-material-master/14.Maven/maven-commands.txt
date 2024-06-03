@@ -59,3 +59,13 @@
    59  clear
    60  ls
    61  /opt/apache-maven-3.3.9/bin/mvn clean install
+
+aws s3 ls
+aws s3 mb s3://maven-arts8074
+aws s3 cp targets/vprofile_v2.war s://maven-arts8074/
+
+empty and remove the s3 bucket
+
+empty --> aws s3 rm s://maven-arts8074
+delete --> aws s3api delete-bucket --bucket maven-arts8074
+
