@@ -1,0 +1,202 @@
+                                Helm Charts 
+								           - the package manager for Kubernetes
+
+	Helm is best way to find, share and use the software build for Kubernetes
+
+	
+	What is Helm?
+	   Helm is package manager to (install, update and Rollout) in Kubernetes. it is a collection of software that bundle together.
+	
+    example:
+	      -->helm install myrelease prom/prometheus
+		  
+	        deploying a multi-component application like Prometheus can be streamlined using a Helm chart instead of creating multiple Kubernetes manifest files.
+			
+			Helm enables developers to focus on application logic rather than spending time managing intricate YAML configurations
+	
+component of Helm:
+
+helm chart: bundle of yaml files
+            Supports helm templating
+	    Stored in Public/private Repos
+
+config Values: Used to customize helm 'releases'
+               Can be set via CLI arguments or
+			   Provided in values.yaml files
+		
+Helm Releases: Running instance of a helm Deployment
+               your helm chart may have multiple releases: dev, test, prod
+			   
+
+helm Repositories : it has both Public/private repos : most common is ArtifactHUB(YOU CAN FILD OPENSOURSE Helm Charts)
+         --> helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+
+Helm templating engine:  helm templating engine is allows to you customize you helm releases
+
+    example : 
+	
+	
+	apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app
+    spec:
+      containers:
+      - name: app
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        ports:
+        - containerPort: 80
+
+   Dynamic Values:
+.Release.Name: Dynamically sets the release name for unique identification.
+.Values.namespace: Namespace defined in the values file.
+.Values.replicaCount: Number of replicas defined in the values file.
+.Values.image.repository and .Values.image.tag: Define the image repository and tag.
+
+values.ymal file
+
+namespace: default
+replicaCount: 1 --> 2,4,8
+image:
+  repository: nginx
+  tag: "latest"  --> we change dev,test,prod
+  
+  
+  helm install dev-app ./my-chart -f values-dev.yaml
+  helm install test-app ./my-chart -f values-test.yaml
+
+
+for prod : 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-app
+  namespace: prod
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: prod-app
+  template:
+    metadata:
+      labels:
+        app: prod-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:stable
+        ports:
+        - containerPort: 80
+
+Helm Chart Structure:
+
+webapp1
+  Chart.yaml
+  template
+    NOTES.TXT
+	configmap.yaml
+    deployment.yaml
+	service.yaml
+ values-dev.yaml
+ values-qa.yaml
+ values-prod.yaml
+ values.yaml
+
+#############################################################################################################
+ 
+ 
+ Helm v2 / helm v3
+
+client/server model                  | client only. Talk driectly to kubernetes API
+Depends on the Tiller Service        |  Uses 'Secrets' as storage driectly
+users 'configmaps' as storage driver | uses user Namespace
+user Tiller Namespace                | improved chart  upgrade Strategies
+More Dependenices/more complex       | less Dependenices/less complex
+
+
+
+Helm commands:
+   Helm Repository Management:
+             Add a Repository: helm repo add <repo-name> <repo-url>
+			                   helm repo add bitnami https://charts.bitnami.com/bitnami
+			List Repositories:helm repo list
+            Update Repositories:helm repo update
+			
+   Search for Charts:
+            helm search repo <chart-name>  ex: helm search repo nginx
+			helm search hub <chart-name>   ex: helm search hub prometheus
+			
+   Install a Chart:
+           Basic Installation: 
+		                    helm install <release-name> <chart-name>
+							helm install my-nginx bitnami/nginx
+		Install with Custom Values:
+                           helm install <release-name> <chart-name> -f values.yaml
+						   helm install my-app ./my-chart -f values-prod.yaml
+		Set Inline Values:
+                          helm install <release-name> <chart-name> --set key=value
+                          helm install my-app ./my-chart --set replicaCount=3
+						  
+	View Installed Releases: helm list
+	
+	Upgrade a Release:
+	         helm upgrade <release-name> <chart-name>  ex: helm upgrade my-nginx bitnami/nginx
+			 helm upgrade <release-name> <chart-name> -f values.yaml ex: helm upgrade my-app ./my-chart -f values-staging.yaml
+			 
+	Rollback a Release: helm rollback <release-name> <revision>   ex: helm rollback my-app 2
+
+	Create a New Chart: helm create <chart-name> ex: helm create my-new-chart
+
+	 Lint a Chart: helm lint <chart-directory> ex: helm lint ./my-chart
+
+	 Package a Chart: helm package <chart-directory> ex: helm package ./my-chart
+
+	 Helm History: helm history <release-name>
+
+	 Debugging:
+	      Install with Debug Output: helm install <release-name> <chart-name> --debug
+		  Dry Run (Preview):helm install <release-name> <chart-name> --dry-run
+
+	Template Rendering: helm template <release-name> <chart-name> ex: helm template my-nginx bitnami/nginx
+	how Chart Information:
+	         View Chart Metadata:
+			         helm show chart <chart-name>
+                     # Example:
+                     helm show chart bitnami/nginx
+			View Chart Values:
+                       helm show values <chart-name>
+
+# Example:
+helm show values bitnami/nginx
+
+    Uninstall a Release:
+     Uninstall a deployed release.
+
+Basic Uninstallation:
+helm uninstall <release-name>
+# Example:
+helm uninstall my-nginx
+Keep History After Uninstall:
+helm uninstall <release-name> --keep-history
+
+	
+
+	
+	
+  
+ 
+			   
+			
+										   
+

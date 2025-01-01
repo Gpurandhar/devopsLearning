@@ -1,0 +1,55 @@
+pipeline {
+    agent { label 'officeAscDotnet' }
+
+    environment {
+        GIT_PATH = "${isUnix() ? '/usr/bin/git' : 'C:\\Program Files\\Git\\bin\\git.exe'}"
+    }
+
+    stages {
+        stage('Environment Setup') {
+            steps {
+                script {
+                    // Check the current operating system
+                    if (isUnix()) {
+                        echo 'Running on a Unix-based system'
+                    } else {
+                        echo 'Running on a Windows-based system'
+                    }
+                }
+            }
+        }
+
+        stage('Git Version Check') {
+            steps {
+                script {
+                    echo "Using Git Path: ${GIT_PATH}"
+                    if (isUnix()) {
+                        sh "${GIT_PATH} --version"
+                    } else {
+                        bat "${GIT_PATH} --version"
+                    }
+                }
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+                script {
+                    echo 'Checking out the repository...'
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: '*/master']],
+                        userRemoteConfigs: [[url: 'https://github.com/Ganapathipurandhar/SCERS_RAP_API.git', credentialsId: 'github-pat']]
+                    ])
+                }
+                script {
+                    // Verify the checked-out files
+                    if (isUnix()) {
+                        sh 'ls -la'
+                    } else {
+                        bat 'dir'
+                    }
+                }
+            }
+        }
+    }
+}
