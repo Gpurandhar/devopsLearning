@@ -1,0 +1,65 @@
+                  gRPC(remote procedure calls)
+                     --> An open-source, high-performance, language-agnostic RPC framework developed by "google". it facilitates the communication between application or microservices running on different platforms, make ideal for building distributed system.
+ 1)Protocol Buffers (Protobuf):
+ its interface definition language (IDL) to define service contracts and messages.Protobuf is efficient, lightweight, and supports cross-platform serialization.
+
+2)Cross-Language Support:supports multiple programming languages like C++, Java, Python, Go, C#, etc.(for interaction)
+
+3)Streaming Capabilities
+gRPC supports four types of APIs for client-server communication:
+Unary: A single request and single response.
+Server streaming: Client sends a request, and the server streams multiple responses.
+Client streaming: Client streams multiple requests, and the server sends one response.
+Bidirectional streaming: Both client and server stream messages simultaneously.
+
+4) HTTP/2-Based Transport:
+Built on HTTP/2, gRPC benefits from features like multiplexing, flow control, and efficient binary serialization.
+
+5)Code Generation:
+Automatically generates client and server stubs from Protobuf definitions, reducing boilerplate code.
+
+6)Performance:
+
+High efficiency and low latency make gRPC suitable for real-time communication and microservices architectures.
+Authentication and Security:
+Built-in support for authentication mechanisms such as SSL/TLS.
+
+example : 
+Use Protobuf to define services and messages
+
+
+syntax = "proto3";
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloResponse);
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloResponse {
+  string message = 1;
+}
+
+Generate Code:
+
+Compile the .proto file using the protoc compiler to generate stubs for the chosen language.
+Implement the Service:
+
+Implement the server-side logic.
+Use the Client:
+
+Call the server methods from the client using the generated client stubs.
+
+
+Key Differences:
+Feature	                HTTP/REST	                   gRPC
+Protocol	        HTTP/1.1 or HTTP/2	           HTTP/2
+Payload Format	        JSON, XML, etc.	                   Protocol Buffers (binary)
+Performance	        Medium	                           High
+Streaming	        Limited	                           Full support
+Tooling	                Broad support (e.g., Postman       Requires specific tools
+Human Readability	Yes	                           No (binary data)
+Cross-Language Stubs	Manual implementation	           Auto-generated
+  
